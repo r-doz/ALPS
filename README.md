@@ -1,4 +1,4 @@
-# ALPS: LLM-guided Probabilistic Program Synthesis
+# ALPS: Automated LLM-guided Probabilistic programs Synthesis
 
 Code for reproducing the experiments in the paper. This repository contains:
 
