@@ -1,0 +1,63 @@
+// Variant of degas.lark for parsing the *rewritten* program text produced by
+// src/helpers/param_extractor.py::extract_params -- identical except numlist entries may
+// also be a free-parameter reference (`_mu1`, `_sigma1`, ...), matching what extract_params
+// writes in place of the mu/sigma literals it lifts out for optimization.
+//
+// NOT used for SynCode/itergen_degas.py generation (that always uses degas.lark, since the
+// LLM is never prompted to emit `_mu1`-style syntax) -- used only by pyro_model.py to parse
+// `rewritten` text when building a Pyro model for MCMC inference. Parsed with Lark's earley
+// parser (a one-shot post-hoc parse, not SynCode's incremental LALR generation), so there's
+// no incremental-lexer ambiguity concern here the way there was in degas.lark.
+//
+// Keep structurally in sync with degas.lark aside from numlist/param_ref.
+
+start: toplevel+
+toplevel: statement
+
+statement: assignment ";"
+         | conditional
+
+assignment: SYMVAR "=" rhs
+
+?rhs: multerm
+    | atom
+    | atom addop atom             -> add_atoms
+    | multerm addop atom          -> add_multerm_right
+    | atom addop multerm          -> add_multerm_left
+
+multerm: signed_num "*" SYMVAR       -> num_var_mult
+        | signed_num "*" dist        -> num_dist_mult
+        | SYMVAR "*" SYMVAR          -> var_var_mult
+
+?atom: SYMVAR                    -> var_atom
+     | signed_num                -> num_atom
+     | dist                      -> dist_atom
+
+?dist: gm | uniform
+
+gm: "gm" "(" numlist "," numlist "," numlist ")"
+uniform: "uniform" "(" numlist "," signed_num ")"
+
+numlist: "[" numentry ("," numentry)* "]"
+?numentry: signed_num | param_ref
+param_ref: "_" SYMVAR
+
+conditional: "if" bexpr "{" ifblock "}" "else" "{" elseblock "}" "end" "if" ";"
+ifblock: statement+
+elseblock: statement+
+
+bexpr: SYMVAR CMPOP signed_num
+
+signed_num: NUMBER -> pos_num
+          | MINUS NUMBER -> neg_num
+
+PLUS: "+"
+MINUS: "-"
+?addop: PLUS | MINUS
+CMPOP: "==" | "!=" | "<=" | ">=" | "<" | ">"
+
+SYMVAR: /[a-zA-Z][a-zA-Z0-9]*/
+NUMBER: /[0-9]{1,3}\.[0-9]{2}/
+
+%import common.WS
+%ignore WS

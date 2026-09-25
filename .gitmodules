@@ -1,0 +1,3 @@
+[submodule "DeGAS"]
+	path = DeGAS
+	url = https://github.com/frarandone/DeGAS.git

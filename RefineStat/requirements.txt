@@ -1,0 +1,59 @@
+# Core Data Science & Numerical Computing
+numpy==1.26.4
+pandas==2.2.1
+xarray==2025.4.0
+scipy>=1.11.0
+
+# PyMC & Statistical Inference
+pymc==5.22.0
+arviz==0.21.0
+numpyro>=0.14.0
+
+# Machine Learning & LLM
+torch==2.4.1
+transformers==4.42.0
+huggingface-hub>=0.20.0
+datasets>=2.0.0
+
+# Data Processing & Visualization
+matplotlib==3.9.4
+seaborn==0.13.2
+
+# Excel & File I/O
+openpyxl==3.1.5
+
+# General Utilities
+tqdm>=4.66.0
+pyyaml>=6.0
+fire>=0.5.0
+jsonschema>=4.0.0
+
+# Text Processing & NLP
+nltk>=3.8.0
+tiktoken>=0.5.0
+regex==2023.8.8
+
+# SQL & Database
+sqlparse>=0.4.0
+
+# Parsing & Grammar
+interegular>=0.3.0
+
+# Optional: For better performance
+accelerate>=0.25.0
+
+# ============================================================================
+# OPTIONAL PACKAGES (Not required for main RefineStat workflow)
+# ============================================================================
+# The following packages are only needed if you want to use code evaluation
+# datasets (mbxp, humaneval, mathqa-x). They have been made optional in the
+# code and are not required for PyMC statistical modeling tasks.
+#
+# To install them (if needed):
+#   pip install git+https://github.com/shubhamugare/mxeval.git
+#   pip install git+https://github.com/openai/human-eval.git
+#
+# Note: These packages may have build issues with newer Python versions.
+# ============================================================================
+# mxeval @ git+https://github.com/shubhamugare/mxeval.git
+# human-eval @ git+https://github.com/openai/human-eval.git

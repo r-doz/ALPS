@@ -1,0 +1,11 @@
+{
+    "temperature": 0.3,
+    "recurrence_penalty": 0.9,
+    "max_iter": 100,
+    "reliability_threshold": 6,
+    "unit_name": "function_call",
+    "pymc_symboltable": {
+        "pm": "pymc"
+    },
+    "num_seeds": 10
+}

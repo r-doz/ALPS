@@ -1,0 +1,15 @@
+# Core dependencies for ALPS (src/) and the RS-MCMC / RS-Grad baselines (src/refinestat_degas,
+# src/grammar_mcmc). For the original RefineStat baseline's own environment, see
+# RefineStat/requirements.txt instead (kept separate deliberately -- see README.md).
+numpy
+pandas
+scipy
+matplotlib
+torch
+requests
+arviz
+jax
+numpyro
+pyro-ppl
+POT
+lark-parser
